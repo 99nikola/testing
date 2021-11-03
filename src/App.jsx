@@ -1,7 +1,26 @@
 import { Controller, useForm, useFormState } from "react-hook-form";
 import { Button, Grid, TextField } from "@material-ui/core";
+import { useEffect } from "react";
+import { debounceFunction, throttleFunction } from "./utils/utils";
 
 const App = () => {
+
+    useEffect(() => {
+        const resizeHandler = () => {
+            console.log("height: ", window.innerHeight, "\nwidth: ", window.innerWidth);
+        }
+
+        // const debounceCallback = debounceFunction(resizeHandler, 300);
+        const throttleCallback = throttleFunction(resizeHandler, 300);
+
+        // window.addEventListener("resize", debounceCallback);
+        window.addEventListener("resize", throttleCallback);
+
+        return () => {
+            // window.removeEventListener("resize", debounceCallback);
+            window.removeEventListener("resize", throttleCallback);
+        }
+    }, []);
 
     const methods = useForm({ 
         mode: "onSubmit",
@@ -31,11 +50,13 @@ const App = () => {
     }
 
     const validateNumber = (inputValue) => {
-        if (isNaN(inputValue))
-            return 'Input is not number'
+        let luckyNumber = Number(inputValue);
+        if (!Number.isInteger(luckyNumber) || luckyNumber < 0 || !Number.isFinite(luckyNumber)) {
+            return "Enter a valid whole number";
+        }
         return true;
     }
-
+    
     return (
         <Grid
             container
@@ -43,7 +64,8 @@ const App = () => {
             justifyContent="center"
             alignItems="center"
         >
-            <form onSubmit={handleSubmit(submitHandler, errorHandler)}>
+                                        
+            <form noValidate={true} onSubmit={handleSubmit(submitHandler, errorHandler)}>
                 <Grid container item direction="column" spacing={3}>   
                     
                     <Grid item>
@@ -96,7 +118,7 @@ const App = () => {
                                 required: 'Required',
                                 pattern: {
                                     value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                                    message: 'Email is not valid'
+                                    message: 'Enter a valid email address'
                                 }
                             }}
                             render={({ field }) => {
