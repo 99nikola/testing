@@ -30,7 +30,8 @@ const App = () => {
             lastName: "",
             email: "",
             password: "",
-            luckyNumber: ""
+            luckyNumber: "",
+            submit: ""
         },
         criteriaMode: "firstError",
         shouldFocusError: true,
@@ -41,15 +42,15 @@ const App = () => {
     
     const { errors } = useFormState({ control });
 
-    const errorHandler = (errors, e) => {
+    const errorHandler = (errors: any) => {
         console.log("Failure: ", errors);
     }
 
-    const submitHandler = (data) => {
+    const submitHandler = (data: any) => {
         console.log("Success: ", data);
     }
 
-    const validateNumber = (inputValue) => {
+    const validateNumber = (inputValue: string): boolean | string => {
         let luckyNumber = Number(inputValue);
         if (!Number.isInteger(luckyNumber) || luckyNumber < 0 || !Number.isFinite(luckyNumber)) {
             return "Enter a valid whole number";
