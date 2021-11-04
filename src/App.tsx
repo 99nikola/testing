@@ -7,8 +7,6 @@ const App = () => {
 
     useEffect(() => {
 
-        console.log(add(['Nikola', 'Popovic', '99']));
-
         const resizeHandler = () => {
             console.log("height: ", window.innerHeight, "\nwidth: ", window.innerWidth);
         }

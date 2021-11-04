@@ -12,20 +12,19 @@ interface Props {
 
 const ControlledField: React.FC<Props> = ({ name, control, label, rules, type }) => {
 
-    const { formState: { errors } } = useFormContext();
-
     return (
         <Grid item>
             <Controller 
                 name={name}
                 control={control}
                 rules={rules}
-                render={({ field }) => 
+                render={({ field, fieldState }) => 
                     <M_TextField
-                        field={field}
+                        value={field.value}
+                        onChange={field.onChange}
                         label={label}
-                        error={Boolean(errors[name])}
-                        helperText={errors[name] ? errors[name]?.message : ''}
+                        error={Boolean(fieldState.error)}
+                        helperText={fieldState.error?.message || ''}
                         type={type}
                     />
                 }

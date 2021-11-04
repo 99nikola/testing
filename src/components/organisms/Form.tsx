@@ -1,5 +1,6 @@
 import { Button, Grid } from "@material-ui/core";
 import { Controller, FormProvider, useForm } from "react-hook-form";
+import { EmailRule, LuckyNumberRule, PasswordRule, RequiredRule } from "../../data/rules";
 import ControlledField from "../molecules/ControlledField";
 
 const Form: React.FC = () => {
@@ -30,13 +31,7 @@ const Form: React.FC = () => {
         console.log("Success: ", data);
     }
 
-    const validateNumber = (inputValue: string): boolean | string => {
-        let luckyNumber = Number(inputValue);
-        if (!Number.isInteger(luckyNumber) || luckyNumber < 0 || !Number.isFinite(luckyNumber)) {
-            return "Enter a valid whole number";
-        }
-        return true;
-    }
+    
 
     return (
         <FormProvider {...methods}>
@@ -47,31 +42,21 @@ const Form: React.FC = () => {
                         name="firstName"
                         control={control}
                         label="First Name"
-                        rules={{
-                            required: 'Required'
-                        }}
+                        rules={RequiredRule}
                     />
 
                     <ControlledField
                         name="lastName"
                         control={control}
                         label="Second Name"
-                        rules={{
-                            required: 'Required'
-                        }}
+                        rules={RequiredRule}
                     />
 
                     <ControlledField
                         name="email"
                         control={control}
                         label="Email address"
-                        rules={{ 
-                            required: 'Required',
-                            pattern: {
-                                value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                                message: 'Enter a valid email address'
-                            }
-                        }}
+                        rules={EmailRule}
                     />
 
                     <ControlledField
@@ -79,24 +64,13 @@ const Form: React.FC = () => {
                         control={control}
                         type="password"
                         label={"Password"}
-                        rules={{
-                            required: 'Required',
-                            minLength: {
-                                value: 6,
-                                message: 'Password must have at least 6 characters'
-                            }
-                        }}
+                        rules={PasswordRule}
                     />
 
                     <ControlledField
                         name="luckyNumber"
                         control={control}
-                        rules={{
-                            required: 'Required',
-                            validate: {
-                                isNumber: validateNumber
-                            }
-                        }}
+                        rules={LuckyNumberRule}
                         label="Lucky Number"
                     />
 
@@ -107,7 +81,8 @@ const Form: React.FC = () => {
                             render={({ field }) => {
                                 return (
                                     <Button 
-                                        {...field}
+                                        value={field.value}
+                                        onChange={field.onChange}
                                         variant="contained"
                                         color="primary"
                                         type="submit"

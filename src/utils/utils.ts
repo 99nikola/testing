@@ -25,7 +25,7 @@ export const throttleFunction = (callBack: Function, delay: number) => {
 
 export const debounceFunction = (callBack: Function, delay: number) => {
     return () => {
-        // clearTimeout(timerId);
+        clearTimeout(timerId as number);
 
         timerId = setTimeout(callBack, delay);
     }
@@ -53,4 +53,13 @@ export function add(arg1: number | string | number[] | string[], arg2?: number |
     }
 
     return String(arg1 as string[]);
+}
+
+
+export const validateNumber = (inputValue: string): boolean | string => {
+    let luckyNumber = Number(inputValue);
+    if (!Number.isInteger(luckyNumber) || luckyNumber < 0 || !Number.isFinite(luckyNumber)) {
+        return "Enter a valid whole number";
+    }
+    return true;
 }
