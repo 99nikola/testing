@@ -1,11 +1,14 @@
 import { useEffect } from "react";
-import { debounceFunction, throttleFunction } from "./utils/utils";
 import Form from "./components/organisms/Form";
 import { Grid } from "@material-ui/core";
+import { debounceFunction, throttleFunction, add } from "./utils/utils";
 
 const App = () => {
 
     useEffect(() => {
+
+        console.log(add(['Nikola', 'Popovic', '99']));
+
         const resizeHandler = () => {
             console.log("height: ", window.innerHeight, "\nwidth: ", window.innerWidth);
         }
