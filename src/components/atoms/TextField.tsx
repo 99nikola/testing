@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { TextField as M_TextField } from "@material-ui/core";
 import React from "react";
 
 interface Props {
@@ -10,9 +10,10 @@ interface Props {
     type?: string
 }
 
-const M_TextField: React.FC<Props> = ({ value, onChange, label, error, helperText, type }) => {
+
+const TextField: React.FC<Props> = ({ value, onChange, label, error, helperText, type }) => {
     return (
-        <TextField
+        <M_TextField
             value={value}
             onChange={onChange}
             label={label}
@@ -24,5 +25,9 @@ const M_TextField: React.FC<Props> = ({ value, onChange, label, error, helperTex
     );
 }
 
-export default M_TextField
+TextField.defaultProps = {
+    type: "text"
+}
+
+export default TextField
 
