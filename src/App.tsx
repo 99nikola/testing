@@ -3,8 +3,6 @@ import Form from "./components/organisms/Form";
 import { Grid } from "@material-ui/core";
 import { debounceFunction, throttleFunction, add } from "./utils/utils";
 import { ReactComponent as Random } from "./resources/random.svg";
-import Radio from "./components/atoms/Radio";
-import Select from "./components/atoms/Select";
 import Stepper from "./components/organisms/Stepper";
 
 const App = () => {
@@ -35,7 +33,6 @@ const App = () => {
         >
             <Form />
             <Stepper />
-            
             
         </Grid>
     );
