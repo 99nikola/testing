@@ -1,4 +1,4 @@
-import { ReactComponent as Location } from "../../../resources/location.svg";
+import { ReactComponent as Location } from "../../../res/location.svg";
 
 const Step1 = () => {
     return (

@@ -1,4 +1,4 @@
-import { ReactComponent as Gear } from "../../../resources/gear.svg";
+import { ReactComponent as Gear } from "../../../res/gear.svg";
 
 const Step2 = () => {
     return (

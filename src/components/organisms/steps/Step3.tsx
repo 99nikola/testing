@@ -1,4 +1,4 @@
-import { ReactComponent as Random } from "../../../resources/random.svg";
+import { ReactComponent as Random } from "../../../res/random.svg";
 
 const Step3 = () => {
     return (
