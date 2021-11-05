@@ -1,6 +1,6 @@
 import { Grid } from "@material-ui/core";
 import { Controller, useFormContext } from "react-hook-form";
-import TextField from "../atoms/TextField";
+import MTextField from "../atoms/MTextField";
 
 interface Props {
     name: any,
@@ -19,7 +19,7 @@ const ControlledField: React.FC<Props> = ({ name, control, label, rules, type })
                 control={control}
                 rules={rules}
                 render={({ field, fieldState }) => 
-                    <TextField
+                    <MTextField
                         value={field.value}
                         onChange={field.onChange}
                         label={label}

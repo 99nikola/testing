@@ -1,11 +1,14 @@
-import { Stepper, Theme, Step, StepLabel, Typography, Button } from "@material-ui/core";
+import { Stepper, Theme, Step, StepLabel, Typography, Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useState } from "react";
+import { StepE, stepLabels } from "../../data/stepper";
+import MButton from "../atoms/MButton";
+import FactoryStepContent from "./FactoryStepContent";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: '60%'
+            width: '60%',
         },
         button: {
             marginRight: theme.spacing(1)
@@ -13,49 +16,26 @@ const useStyles = makeStyles((theme: Theme) =>
         instructions: {
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1)
+        },
+        container: {
+            margin: theme.spacing(5, 0, 5,0 )
         }
     })
 );
 
-enum StepE {
-    STEP1,
-    STEP2,
-    STEP3
-}
-
-const stepLabels = ['Label 1', 'Label 2', 'Label 3'];
-
-const getStepMessage = (step: StepE) => {
-    return stepLabels[step];
-}
-
-
-const StepContent = (step: StepE) => {
-    switch (step) {
-        case StepE.STEP1:
-            return 'Step 1';
-        case StepE.STEP2:
-            return 'Step 2';
-        case StepE.STEP3:
-            return 'Step 3';
-        default:
-            throw 'Something is very wrong! Impossible step'
-    }
-}
-
 const HorizontalLinearStepper = () => {
 
     const classes = useStyles();
-    const [ activeStep, setActiveStep ] = useState(0);
+    const [ activeStep, setActiveStep ] = useState(0);  
 
     const nextHandler = () => {
         setActiveStep((prevStep: StepE) => prevStep + 1);
     }
-
+    
     const resetHandler = () => {
         setActiveStep(StepE.STEP1);
     }
-
+    
     const backHandler = () => {
         setActiveStep((prevStep: StepE) => prevStep - 1);
     }
@@ -63,13 +43,11 @@ const HorizontalLinearStepper = () => {
     return (
         <div className={classes.root}>
             <Stepper activeStep={activeStep}>
-                {stepLabels.map((label, index) => {
-                    return (
-                        <Step key={label} >
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                    );
-                })}
+                {stepLabels.map((label) =>
+                    <Step key={label} >
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                )}
             </Stepper>
             <div>
                 {activeStep === stepLabels.length ? (
@@ -77,32 +55,36 @@ const HorizontalLinearStepper = () => {
                         <Typography className={classes.instructions}>
                             All steps complited
                         </Typography>
-                        <Button onClick={resetHandler} className={classes.button}>
-                            Reset
-                        </Button>
+                        <MButton 
+                            className={classes.button}
+                            onClick={resetHandler} 
+                            text="Reset"
+                        />
                     </>    
                 ) : (
-                    <>
-                        <Typography className={classes.instructions}>
-                            {StepContent(activeStep)}
-                        </Typography>
-                        <Button 
-                            className={classes.button}
-                            variant="contained"
-                            color="secondary"
-                            disabled={activeStep === 0}
-                            onClick={backHandler}
-                        >   Back
-                        </Button>
+                    <Grid container direction="column" alignItems="center">
 
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            onClick={nextHandler}
-                        >   {activeStep === stepLabels.length-1 ? 'Finish' : 'Next'}
-                        </Button>
-                    </>
+                        <Grid item className={classes.container}>
+                            <FactoryStepContent step={activeStep} />
+                        </Grid>
+
+                        <Grid  container item direction="row" justifyContent="center" alignItems="center">
+                            <MButton 
+                                className={classes.button}
+                                color="secondary"
+                                disabled={activeStep === 0}
+                                onClick={backHandler}
+                                text={'Back'}
+                            />
+
+                            <MButton 
+                                className={classes.button}
+                                onClick={nextHandler}    
+                                text={activeStep === stepLabels.length-1 ? 'Finish' : 'Next'}
+                            />
+                        </Grid>
+                        
+                    </Grid>
                 )}
             </div>
         </div>

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Form from "./components/organisms/Form";
 import { Grid } from "@material-ui/core";
 import { debounceFunction, throttleFunction, add } from "./utils/utils";
-import { ReactComponent as Random } from "./resources/random.svg";
 import Stepper from "./components/organisms/Stepper";
 
 const App = () => {
